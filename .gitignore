@@ -1,0 +1,67 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# uv — le lockfile doit être versionné
+.python-version
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# mypy / ruff
+.mypy_cache/
+.ruff_cache/
+
+# ── Next.js ───────────────────────────────────────────────────────────────────
+apps/web/.next/
+apps/web/out/
+apps/web/node_modules/
+apps/web/.npm/
+
+# ── Variables d'environnement ─────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Stockage local (fichiers uploadés) ───────────────────────────────────────
+apps/backend/storage/
+
+# ── Base de données locale ────────────────────────────────────────────────────
+*.sqlite
+*.db
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+# (les fichiers compose sont versionnés, pas les volumes)
+
+# ── Système ───────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Éditeurs ──────────────────────────────────────────────────────────────────
+.idea/
+*.swp
+*.swo
+
+# ── Documents confidentiels ───────────────────────────────────────────────────
+# Ne jamais committer de vrais documents, clés ou identifiants
+*.pdf
+*.jpg
+*.jpeg
+*.png
+!examples/**
