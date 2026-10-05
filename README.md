@@ -4,8 +4,8 @@
 
 DocuFlow est une plateforme open source d'extraction, de validation humaine et d'export de données documentaires, fondée sur l'OCR et l'intelligence artificielle. Son objectif : transformer des documents en données structurées, traçables et prêtes à être utilisées dans d'autres applications.
 
-> **Statut : projet en cours de conception.**  
-> Les fonctionnalités décrites ci-dessous constituent le périmètre prévu. Les instructions d'installation seront ajoutées avec la première version exécutable.
+> **Statut : en cours de développement — structure initialisée.**  
+> Les fonctionnalités décrites ci-dessous constituent le périmètre prévu. Les instructions d'installation complètes seront ajoutées avec la première version exécutable.
 
 ---
 
@@ -77,18 +77,27 @@ Les deux méthodes produisent le même schéma de données, ce qui facilite leur
 
 ---
 
-## Architecture envisagée
+## Architecture
 
-| Composant | Responsabilité |
-|---|---|
-| Next.js | Importation, consultation et validation des documents |
-| FastAPI | API, orchestration et exports |
-| Worker Python | Traitements documentaires en arrière-plan |
-| PostgreSQL | Métadonnées, résultats et historique des corrections |
-| Stockage de fichiers | Documents originaux et images des pages |
-| Docker Compose | Environnement de développement et déploiement local |
+| Composant | Technologie | Responsabilité |
+|---|---|---|
+| Frontend | Next.js | Importation, consultation et validation des documents |
+| API | FastAPI (Python 3.12) | API, orchestration et exports |
+| Worker | Python 3.12 | Traitements documentaires en arrière-plan |
+| Base de données | PostgreSQL 18 | Métadonnées, résultats et historique des corrections |
+| Stockage de fichiers | Volume local | Documents originaux et images des pages |
+| Environnement | Docker Compose | Développement local et déploiement |
 
-L'architecture initiale privilégie un monolithe modulaire accompagné d'un worker.
+L'architecture initiale privilégie un monolithe modulaire accompagné d'un worker. Le dépôt est organisé en monorepo :
+
+```
+apps/backend/   → API FastAPI et worker Python
+apps/web/       → Frontend Next.js
+benchmarks/     → Scripts d'évaluation et résultats
+examples/       → Documents fictifs et annotations
+docs/           → Architecture, installation et contribution
+compose.yaml    → Services locaux
+```
 
 ---
 
@@ -129,7 +138,7 @@ Les résultats seront accompagnés du protocole d'évaluation, des versions util
 
 - [ ] Définir le schéma des champs et les critères d'acceptation.
 - [ ] Créer les factures fictives et leurs annotations.
-- [ ] Structurer le dépôt et l'environnement de développement.
+- [x] Structurer le dépôt et l'environnement de développement.
 - [ ] Implémenter l'extraction de référence.
 - [ ] Ajouter les contrôles métier.
 - [ ] Développer l'interface de validation.
