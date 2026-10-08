@@ -1,7 +1,9 @@
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 
 from docuflow.api.documents import router as documents_router
@@ -34,6 +36,11 @@ app.add_middleware(
 )
 
 app.include_router(documents_router, prefix="/api/v1")
+
+# Servir les fichiers uploadés (pour l'aperçu PDF dans le frontend)
+storage = Path(settings.storage_path)
+storage.mkdir(parents=True, exist_ok=True)
+app.mount("/files", StaticFiles(directory=str(storage)), name="files")
 
 
 @app.get("/health", tags=["system"])

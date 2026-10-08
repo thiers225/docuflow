@@ -89,6 +89,21 @@ async def list_documents(
     return list(result.scalars().all())
 
 
+@router.delete(
+    "/{document_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Supprimer un document",
+    description="Supprime un document et toutes ses extractions.",
+)
+async def delete_document(
+    document_id: int,
+    db: AsyncSession = Depends(get_db),
+) -> None:
+    document = await _get_document_or_404(document_id, db)
+    await db.delete(document)
+    await db.commit()
+
+
 @router.get(
     "/{document_id}",
     response_model=DocumentDetail,
