@@ -9,6 +9,7 @@ from alembic import context
 
 from docuflow.core.config import settings
 from docuflow.db.base import Base
+import docuflow.db.models  # noqa: F401 — enregistre les modèles pour l'autogenerate
 
 # Alembic Config object
 config = context.config

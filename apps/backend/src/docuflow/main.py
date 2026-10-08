@@ -33,6 +33,10 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+def home():
+    return "App Running"
+    
 @app.get("/health", tags=["system"])
 async def health() -> dict:
     return {"status": "ok", "env": settings.app_env}
