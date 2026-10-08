@@ -41,6 +41,7 @@ apps/web/.npm/
 
 # ── Stockage local (fichiers uploadés) ───────────────────────────────────────
 apps/backend/storage/
+examples/invoices/
 
 # ── Base de données locale ────────────────────────────────────────────────────
 *.sqlite

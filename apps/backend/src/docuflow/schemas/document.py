@@ -12,10 +12,6 @@ class DocumentBase(BaseModel):
     filename: str
 
 
-class DocumentCreate(DocumentBase):
-    original_path: str
-
-
 class DocumentRead(DocumentBase):
     id: int
     status: DocumentStatus
@@ -27,7 +23,7 @@ class DocumentRead(DocumentBase):
             "examples": [
                 {
                     "id": 1,
-                    "filename": "facture_sotelma_2026_001.pdf",
+                    "filename": "facture_001_cie.pdf",
                     "status": "pending",
                     "created_at": "2026-10-05T08:30:00Z",
                 }
@@ -47,7 +43,7 @@ class DocumentDetail(DocumentRead):
             "examples": [
                 {
                     "id": 1,
-                    "filename": "facture_sotelma_2026_001.pdf",
+                    "filename": "facture_001_cie.pdf",
                     "status": "done",
                     "created_at": "2026-10-05T08:30:00Z",
                     "extractions": [
@@ -59,8 +55,8 @@ class DocumentDetail(DocumentRead):
                             "prompt_config": None,
                             "invoice_number": "FACT-2026-00142",
                             "invoice_date": "2026-09-15",
-                            "supplier": "SOTELMA SA",
-                            "client": "CABINET DIALLO & ASSOCIÉS",
+                            "supplier": "CIE — COMPAGNIE IVOIRIENNE D'ÉLECTRICITÉ",
+                            "client": "BRASSERIES IVOIRIENNES RÉUNIES SARL",
                             "total_ht": "185000.00",
                             "tax_amount": "33300.00",
                             "total_ttc": "218300.00",

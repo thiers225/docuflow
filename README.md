@@ -180,7 +180,9 @@ Avant de commencer, ouvrez une issue ou commentez une issue existante pour préc
 
 ## Licence
 
-La licence open source reste à choisir. Les conditions de réutilisation seront précisées dans un fichier `LICENSE` avant la première publication.
+DocuFlow est distribué sous licence **MIT**.
+
+Voir le fichier [`LICENSE`](LICENSE) pour le texte complet.
 
 ---
 

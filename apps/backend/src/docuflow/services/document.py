@@ -7,7 +7,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from docuflow.core.config import settings
 from docuflow.db.models import Document, DocumentStatus
 
-
 ALLOWED_EXTENSIONS = {".pdf", ".jpg", ".jpeg", ".png"}
 
 

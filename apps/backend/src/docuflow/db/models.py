@@ -17,20 +17,20 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from docuflow.db.base import Base
 
 
-class DocumentStatus(str, enum.Enum):
+class DocumentStatus(enum.StrEnum):
     pending = "pending"
     processing = "processing"
     done = "done"
     error = "error"
 
 
-class FieldSource(str, enum.Enum):
+class FieldSource(enum.StrEnum):
     extracted = "extracted"
     deduced = "deduced"
     corrected = "corrected"
 
 
-class CheckSeverity(str, enum.Enum):
+class CheckSeverity(enum.StrEnum):
     error = "error"       # Incohérence bloquante
     warning = "warning"   # Anomalie non bloquante
 
