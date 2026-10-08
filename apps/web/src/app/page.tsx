@@ -6,10 +6,10 @@ import Link from "next/link";
 import {
   FileText, CheckCircle2, AlertCircle, Clock,
   Loader2, Trash2, ChevronLeft, ChevronRight,
-  ArrowRight, Upload,
+  ArrowRight,
 } from "lucide-react";
 import { api, type Document } from "@/lib/api";
-import { ImportButton } from "@/components/import-button";
+import { ImportButton, ImportTrigger } from "@/components/import-button";
 
 export const dynamic = "force-dynamic";
 
@@ -149,12 +149,7 @@ export default function HomePage() {
             <p className="font-medium text-[#555]">Aucun document</p>
             <p className="text-sm mt-1">Importez une facture PDF pour en extraire les données.</p>
           </div>
-          <label className="cursor-pointer">
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#e8473f] hover:bg-[#d13f38] text-white text-sm font-medium rounded-lg transition-colors">
-              <Upload className="h-4 w-4" />
-              Importer un document
-            </span>
-          </label>
+          <ImportTrigger className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#e8473f] hover:bg-[#d13f38] text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-60" />
         </div>
       )}
 
