@@ -4,6 +4,7 @@ from decimal import Decimal
 from pydantic import BaseModel
 
 from docuflow.db.models import FieldSource
+from docuflow.schemas.check import ExtractionCheckRead
 
 
 class ExtractionFieldRead(BaseModel):
@@ -15,7 +16,22 @@ class ExtractionFieldRead(BaseModel):
     page: int | None
     location: str | None
 
-    model_config = {"from_attributes": True}
+    model_config = {
+        "from_attributes": True,
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "id": 1,
+                    "field_name": "invoice_number",
+                    "raw_value": "FACT-2026-00142",
+                    "corrected_value": None,
+                    "source": "extracted",
+                    "page": 1,
+                    "location": "x1=52, y1=120, x2=210, y2=135",
+                }
+            ]
+        },
+    }
 
 
 class ExtractionRead(BaseModel):
@@ -40,5 +56,49 @@ class ExtractionRead(BaseModel):
 
     created_at: datetime
     fields: list[ExtractionFieldRead] = []
+    checks: list[ExtractionCheckRead] = []
 
-    model_config = {"from_attributes": True}
+    model_config = {
+        "from_attributes": True,
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "id": 1,
+                    "document_id": 1,
+                    "engine": "rules",
+                    "engine_version": "0.1.0",
+                    "prompt_config": None,
+                    "invoice_number": "FACT-2026-00142",
+                    "invoice_date": "2026-09-15",
+                    "supplier": "SOTELMA SA",
+                    "client": "CABINET DIALLO & ASSOCIÉS",
+                    "total_ht": "185000.00",
+                    "tax_amount": "33300.00",
+                    "total_ttc": "218300.00",
+                    "currency": "FCFA",
+                    "due_date": "2026-10-15",
+                    "created_at": "2026-10-05T08:30:00Z",
+                    "fields": [
+                        {
+                            "id": 1,
+                            "field_name": "invoice_number",
+                            "raw_value": "FACT-2026-00142",
+                            "corrected_value": None,
+                            "source": "extracted",
+                            "page": 1,
+                            "location": "x1=52, y1=120, x2=210, y2=135",
+                        },
+                        {
+                            "id": 2,
+                            "field_name": "total_ttc",
+                            "raw_value": "218 300 FCFA",
+                            "corrected_value": None,
+                            "source": "extracted",
+                            "page": 1,
+                            "location": "x1=400, y1=520, x2=550, y2=535",
+                        },
+                    ],
+                }
+            ]
+        },
+    }

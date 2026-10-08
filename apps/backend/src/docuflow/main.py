@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 
+from docuflow.api.documents import router as documents_router
 from docuflow.core.config import settings
 from docuflow.db.database import AsyncSessionLocal
 
@@ -32,11 +33,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(documents_router, prefix="/api/v1")
 
-@app.get("/")
-def home():
-    return "App Running"
-    
+
 @app.get("/health", tags=["system"])
 async def health() -> dict:
     return {"status": "ok", "env": settings.app_env}

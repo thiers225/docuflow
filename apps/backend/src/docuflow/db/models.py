@@ -2,6 +2,7 @@ import enum
 from datetime import datetime
 
 from sqlalchemy import (
+    Boolean,
     DateTime,
     Enum,
     ForeignKey,
@@ -27,6 +28,11 @@ class FieldSource(str, enum.Enum):
     extracted = "extracted"
     deduced = "deduced"
     corrected = "corrected"
+
+
+class CheckSeverity(str, enum.Enum):
+    error = "error"       # Incohérence bloquante
+    warning = "warning"   # Anomalie non bloquante
 
 
 class Document(Base):
@@ -79,6 +85,9 @@ class Extraction(Base):
     fields: Mapped[list["ExtractionField"]] = relationship(
         back_populates="extraction", cascade="all, delete-orphan"
     )
+    checks: Mapped[list["ExtractionCheck"]] = relationship(
+        back_populates="extraction", cascade="all, delete-orphan"
+    )
 
 
 class ExtractionField(Base):
@@ -100,3 +109,20 @@ class ExtractionField(Base):
     location: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     extraction: Mapped["Extraction"] = relationship(back_populates="fields")
+
+
+class ExtractionCheck(Base):
+    __tablename__ = "extraction_checks"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    extraction_id: Mapped[int] = mapped_column(
+        ForeignKey("extractions.id", ondelete="CASCADE"), nullable=False
+    )
+    rule: Mapped[str] = mapped_column(String(100), nullable=False)
+    passed: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    severity: Mapped[CheckSeverity] = mapped_column(
+        Enum(CheckSeverity), nullable=False
+    )
+    message: Mapped[str] = mapped_column(Text, nullable=False)
+
+    extraction: Mapped["Extraction"] = relationship(back_populates="checks")
