@@ -146,7 +146,7 @@ Les résultats seront accompagnés du protocole d'évaluation, des versions util
 - [ ] Intégrer une méthode multimodale.
 - [ ] Publier le benchmark et l'analyse des erreurs.
 - [ ] Ajouter les tests et les vérifications automatiques.
-- [ ] Documenter l'installation avec Docker Compose.
+- [x] Documenter l'installation avec Docker Compose.
 - [ ] Publier une première version.
 
 ---
@@ -166,7 +166,31 @@ Après validation du premier cas d'application :
 
 ## Installation
 
-Aucune procédure d'installation exécutable n'est disponible à ce stade. Elle sera publiée avec la première implémentation.
+### Avec Docker Compose (recommandé)
+
+**Prérequis** : Docker et Docker Compose installés.
+
+```bash
+# Cloner le dépôt
+git clone https://github.com/thiers225/docuflow.git
+cd docuflow
+
+# Lancer tous les services
+docker compose up -d
+```
+
+L'application est accessible sur :
+- Frontend : [http://localhost:3000](http://localhost:3000)
+- API : [http://localhost:8000](http://localhost:8000)
+- Documentation API : [http://localhost:8000/docs](http://localhost:8000/docs)
+
+Les migrations sont appliquées automatiquement au démarrage.
+
+### En développement
+
+Voir les README de chaque composant :
+- [`apps/backend/README.md`](apps/backend/README.md) — API FastAPI
+- [`apps/web/README.md`](apps/web/README.md) — Frontend Next.js
 
 ---
 

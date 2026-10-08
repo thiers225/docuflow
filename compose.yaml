@@ -1,4 +1,6 @@
 services:
+
+  # ── Base de données ──────────────────────────────────────────────────────────
   db:
     image: postgres:18
     restart: unless-stopped
@@ -16,5 +18,44 @@ services:
       timeout: 5s
       retries: 5
 
+  # ── API FastAPI ───────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_SECRET_KEY: ${APP_SECRET_KEY:-changeme-in-production}
+      DATABASE_URL: postgresql+psycopg://docuflow:docuflow@db:5432/docuflow
+      STORAGE_PATH: /app/storage
+      CORS_ORIGINS: '["http://localhost:3000","http://web:3000"]'
+    volumes:
+      - storage_data:/app/storage
+    depends_on:
+      db:
+        condition: service_healthy
+    # Appliquer les migrations au démarrage avant de lancer l'API
+    command: >
+      sh -c "uv run alembic upgrade head &&
+             uv run uvicorn docuflow.main:app --host 0.0.0.0 --port 8000"
+
+  # ── Frontend Next.js ──────────────────────────────────────────────────────────
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000/api/v1
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
 volumes:
   postgres_data:
+  storage_data:
