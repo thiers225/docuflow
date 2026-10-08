@@ -4,8 +4,8 @@
 
 DocuFlow est une plateforme open source d'extraction, de validation humaine et d'export de données documentaires, fondée sur l'OCR et l'intelligence artificielle. Son objectif : transformer des documents en données structurées, traçables et prêtes à être utilisées dans d'autres applications.
 
-> **Statut : en cours de développement — structure initialisée.**  
-> Les fonctionnalités décrites ci-dessous constituent le périmètre prévu. Les instructions d'installation complètes seront ajoutées avec la première version exécutable.
+> **Statut : en cours de développement — première version fonctionnelle.**  
+> L'extraction par règles, les contrôles métier, l'interface de validation et les exports sont disponibles. Les instructions d'installation complètes seront ajoutées avec la première version publiable.
 
 ---
 
@@ -137,12 +137,12 @@ Les résultats seront accompagnés du protocole d'évaluation, des versions util
 ## Feuille de route
 
 - [ ] Définir le schéma des champs et les critères d'acceptation.
-- [ ] Créer les factures fictives et leurs annotations.
+- [x] Créer les factures fictives et leurs annotations.
 - [x] Structurer le dépôt et l'environnement de développement.
-- [ ] Implémenter l'extraction de référence.
-- [ ] Ajouter les contrôles métier.
-- [ ] Développer l'interface de validation.
-- [ ] Ajouter l'export JSON et CSV.
+- [x] Implémenter l'extraction de référence.
+- [x] Ajouter les contrôles métier.
+- [x] Développer l'interface de validation.
+- [x] Ajouter l'export JSON et CSV.
 - [ ] Intégrer une méthode multimodale.
 - [ ] Publier le benchmark et l'analyse des erreurs.
 - [ ] Ajouter les tests et les vérifications automatiques.

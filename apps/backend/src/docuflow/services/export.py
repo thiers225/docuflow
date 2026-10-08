@@ -10,7 +10,9 @@ from docuflow.db.models import Document, Extraction
 def _decimal_to_str(value: object) -> str | None:
     if value is None:
         return None
-    return str(Decimal(str(value)).normalize())
+    d = Decimal(str(value))
+    # Forcer la notation décimale standard sans notation scientifique
+    return format(d, "f")
 
 
 def _extraction_to_dict(extraction: Extraction) -> dict:
@@ -69,8 +71,20 @@ def export_json(document: Document) -> str:
     return json.dumps(data, ensure_ascii=False, indent=2)
 
 
+def _corrected_value(extraction: Extraction, field_name: str) -> str | None:
+    """Retourne la valeur corrigée si elle existe, sinon la valeur brute du champ."""
+    for f in extraction.fields:
+        if f.field_name == field_name and f.corrected_value is not None:
+            return f.corrected_value
+    return None
+
+
 def export_csv(document: Document) -> bytes:
-    """Sérialise la dernière extraction d'un document en CSV (UTF-8 avec BOM)."""
+    """Sérialise la dernière extraction d'un document en CSV (UTF-8 avec BOM).
+
+    Les valeurs exportées sont les valeurs finales : corrigées si disponibles,
+    sinon extraites automatiquement.
+    """
     output = io.StringIO()
 
     fieldnames = [
@@ -98,15 +112,15 @@ def export_csv(document: Document) -> bytes:
             "filename": document.filename,
             "extraction_id": extraction.id,
             "engine": extraction.engine,
-            "invoice_number": extraction.invoice_number or "",
-            "invoice_date": extraction.invoice_date or "",
-            "supplier": extraction.supplier or "",
-            "client": extraction.client or "",
-            "total_ht": _decimal_to_str(extraction.total_ht) or "",
-            "tax_amount": _decimal_to_str(extraction.tax_amount) or "",
-            "total_ttc": _decimal_to_str(extraction.total_ttc) or "",
-            "currency": extraction.currency or "",
-            "due_date": extraction.due_date or "",
+            "invoice_number": _corrected_value(extraction, "invoice_number") or extraction.invoice_number or "",
+            "invoice_date": _corrected_value(extraction, "invoice_date") or extraction.invoice_date or "",
+            "supplier": _corrected_value(extraction, "supplier") or extraction.supplier or "",
+            "client": _corrected_value(extraction, "client") or extraction.client or "",
+            "total_ht": _corrected_value(extraction, "total_ht") or _decimal_to_str(extraction.total_ht) or "",
+            "tax_amount": _corrected_value(extraction, "tax_amount") or _decimal_to_str(extraction.tax_amount) or "",
+            "total_ttc": _corrected_value(extraction, "total_ttc") or _decimal_to_str(extraction.total_ttc) or "",
+            "currency": _corrected_value(extraction, "currency") or extraction.currency or "",
+            "due_date": _corrected_value(extraction, "due_date") or extraction.due_date or "",
         })
 
     return output.getvalue().encode("utf-8-sig")
