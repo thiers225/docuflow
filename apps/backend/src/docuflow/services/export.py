@@ -1,7 +1,7 @@
 import csv
 import io
 import json
-from datetime import datetime
+from datetime import datetime, UTC
 from decimal import Decimal
 
 from docuflow.db.models import Document, Extraction
@@ -59,7 +59,7 @@ def _extraction_to_dict(extraction: Extraction) -> dict:
 def export_json(document: Document) -> str:
     """Sérialise un document et ses extractions en JSON."""
     data = {
-        "export_date": datetime.utcnow().isoformat() + "Z",
+        "export_date": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
         "document": {
             "id": document.id,
             "filename": document.filename,
